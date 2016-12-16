@@ -2,13 +2,20 @@ def init_data():
     from collections import defaultdict
     import json
     words = defaultdict(list)
+    small_list = defaultdict(list)
     with open('data/words.txt', 'r') as words_file:
         a = words_file.readlines()
         for each in a:
             each = each.strip(' \n\r\t')
             if each.isalpha():
                 words[len(each)].append(each)
-    json.dump(words, open('data/words.json', 'w'))
+    with open('data/small_list.txt', 'r') as words_file:
+        a = words_file.readlines()
+        for each in a:
+            each = each.strip(' \n\r\t')
+            if each.isalpha():
+                small_list[len(each)].append(each)
+    json.dump([words, small_list], open('data/words.json', 'w'))
 
 
 def load_data():
@@ -46,6 +53,8 @@ def cal_score(a, b):
 
 def play(data):
     import random
+    small_list = data[1]
+    data = data[0]
     while True:
         try:
             n_of_chrs = int(input("Please enter number of chars [4-15]:"))
@@ -64,7 +73,7 @@ def play(data):
         except ValueError:
             print("Please enter a valid number")
 
-    main_word = random.choice(data[str(n_of_chrs)])
+    main_word = random.choice(small_list[str(n_of_chrs)])
     # print(main_word)
     main_list = set(data[str(n_of_chrs)])
     current_turn = 0
