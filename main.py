@@ -15,6 +15,7 @@ def init_data():
             each = each.strip(' \n\r\t')
             if each.isalpha():
                 small_list[len(each)].append(each)
+                words[len(each)].append(each)
     json.dump([words, small_list], open('data/words.json', 'w'))
 
 
